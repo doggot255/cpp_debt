@@ -75,6 +75,16 @@ int Room::get_total_waiting_time()
 {
     int waiting_time = 0;
 
+    for (int i = 0; i < patients.size() - 1; i++)
+    {
+        waiting_time += patients.front().get_remaining_amount_of_work();
+        std::cout << i << " " << patients.front().get_remaining_amount_of_work() << "->" << waiting_time << std::endl;
+
+        patients.push(patients.front());
+        patients.pop();
+    }
+
+    return waiting_time / doctor.get_throughput();
 }
 
 Clinic::Clinic() // TBD: may need to switch from [] to .insert

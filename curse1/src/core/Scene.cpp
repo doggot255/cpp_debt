@@ -124,4 +124,6 @@ void Scene::menu_insert_patient_into_queue()
     std::cin >> procedure_name;
 
     clinic.insert_patient_into_queue(room_number, Patient(name, second_name, surname, Clinic::calculate_amount_of_work(procedure_name)));
+    std::cout << "Примерное время ожидания: " << clinic.get_room_waiting_time(room_number) * 1000 / UPDATE_RATE_MILLISECONDS << " секунд";
+    pause();
 }
