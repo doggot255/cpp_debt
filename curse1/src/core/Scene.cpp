@@ -6,7 +6,7 @@ inline void Scene::pause()
     std::cin.get();
 }
 
-Scene::Scene(): clinic(generator)
+Scene::Scene(): clinic()
 {
     clinic.debug_print_rooms_to_file();
 }

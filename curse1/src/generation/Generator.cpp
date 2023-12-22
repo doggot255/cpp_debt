@@ -52,6 +52,12 @@ Generator::Generator(): mt(rd())
     std::cout << "done." << std::endl;
 }
 
+Generator & Generator::instance()
+{
+    static Generator instance;
+    return instance;
+}
+
 int Generator::get_random_number(int lbound, int ubound)
 {
     std::uniform_int_distribution<int> dist(lbound, ubound);
@@ -69,24 +75,6 @@ Doctor Generator::create_new_doctor()
     )
     :
     Doctor(
-        names_female[get_random_number(0, names_female.size())],
-        second_names_female[get_random_number(0, second_names_female.size())],
-        surnames_female[get_random_number(0, surnames_female.size())],
-        get_random_number(MIN_DOCTOR_THROUGHPUT, MAX_DOCTOR_THROUGHPUT)
-    );
-}
-
-Doctor * Generator::create_new_doctor_dyn()
-{
-    return get_random_number(0, 1) ? // true: male, false: female
-    new Doctor(
-        names_male[get_random_number(0, names_male.size())],
-        second_names_male[get_random_number(0, second_names_male.size())],
-        surnames_male[get_random_number(0, surnames_male.size())],
-        get_random_number(MIN_DOCTOR_THROUGHPUT, MAX_DOCTOR_THROUGHPUT)
-    )
-    :
-    new Doctor(
         names_female[get_random_number(0, names_female.size())],
         second_names_female[get_random_number(0, second_names_female.size())],
         surnames_female[get_random_number(0, surnames_female.size())],

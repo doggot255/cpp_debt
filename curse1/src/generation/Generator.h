@@ -30,15 +30,15 @@ class Generator
     std::vector<std::string> second_names_female;
     std::vector<std::string> surnames_male;
     std::vector<std::string> surnames_female;
-
+    
     std::random_device rd;
     std::mt19937 mt;
 
-public:
     Generator();
+public:
+    static Generator & instance();
     int get_random_number(int, int);
     Doctor create_new_doctor();
-    Doctor *create_new_doctor_dyn();
     Patient create_new_patient();
 };
 

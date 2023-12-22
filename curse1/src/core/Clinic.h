@@ -17,6 +17,7 @@
 #define MIN_ROOMS_QUANTITY 1
 #define ROOM_NUMBER_MAX_GAP 20
 #define ROOM_NUMBER_MIN_GAP 1
+#define MINIMAL_ROOM_NUMBER 100
 
 #define PRINT_BOARD_LENGTH 50
 #define INDEX_SUBSECTION_LENGTH 3
@@ -25,13 +26,12 @@
 
 class Room
 {
-    Doctor *doctor;
+    Doctor doctor;
     std::queue<Patient> patients;
-    Patient *current_patient;
+    int room_number;
 
 public:
     Room();
-    Room(Generator &);
     void print_as_table();
     void update();
     std::string to_string();
@@ -44,7 +44,7 @@ class Clinic
     std::map<int, Room> rooms;
 
 public:
-    Clinic(Generator &);
+    Clinic();
     void update(double);
     std::map<int, Room>::iterator find_room_by_number(int );
     std::map<int, Room>::iterator find_room_by_doctor(std::string &);

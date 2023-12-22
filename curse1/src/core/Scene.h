@@ -8,7 +8,6 @@
 
 class Scene
 {
-    Generator generator;
     Clinic clinic;
 
     void pause();
