@@ -16,7 +16,7 @@ public:
     void start_main_menu();
     void menu_find_room_by_number();
     void menu_find_doctor_by_surname();
-    void enter_queue();
+    void menu_insert_patient_into_queue();
 };
 
 #endif

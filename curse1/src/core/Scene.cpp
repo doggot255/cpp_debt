@@ -34,6 +34,10 @@ void Scene::start_main_menu()
                 menu_find_doctor_by_surname();
                 break;
 
+            case '3':
+                menu_insert_patient_into_queue();
+                break;
+
             default:
                 std::cout << "Некорректный ввод. Попробуйте снова." << std::endl;
                 pause();
@@ -87,9 +91,37 @@ void Scene::menu_find_doctor_by_surname()
     pause();
 }
 
-void Scene::enter_queue()
+void Scene::menu_insert_patient_into_queue()
 {
     system("clear");
 
     int room_number;
+
+    std::cout << "Номер кабинета: ";
+    std::cin >> room_number;
+
+    if (!clinic.check_if_room_exists(room_number))
+    {
+        std::cout << "Данного кабинета не найдено" << std::endl;
+        std::cout << "Нажмите Enter для выхода..." << std::endl;
+        pause();
+        return;
+    }
+
+    std::string name;
+    std::string second_name;
+    std::string surname;
+
+    std::cout << "Ваше имя: ";
+    std::cin >> name;
+    std::cout << "Ваше отчетство: ";
+    std::cin >> second_name;
+    std::cout << "Ваша фамилия: ";
+    std::cin >> surname;
+
+    std::string procedure_name;
+    std::cout << "Полное название процедуры: " << std::endl;
+    std::cin >> procedure_name;
+
+    clinic.insert_patient_into_queue(room_number, Patient(name, second_name, surname, Clinic::calculate_amount_of_work(procedure_name)));
 }

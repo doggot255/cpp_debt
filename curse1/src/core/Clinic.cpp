@@ -33,7 +33,6 @@ void Room::print_as_table()
 {
     draw_header(doctor.to_string(), INDEX_SUBSECTION_LENGTH,  PRINT_BOARD_LENGTH);
 
-    Patient *temp_patient;
     for (int i = 0; i < patients.size(); i++)
     {
         draw_section_with_subsection(std::to_string(i), INDEX_SUBSECTION_LENGTH,
@@ -65,6 +64,17 @@ std::string Room::get_doctor_name()
 std::string Room::to_string()
 {
     return doctor.to_string();
+}
+
+void Room::add_patient_to_queue(Patient patient)
+{
+    patients.push(patient);
+}
+
+int Room::get_total_waiting_time()
+{
+    int waiting_time = 0;
+
 }
 
 Clinic::Clinic() // TBD: may need to switch from [] to .insert
@@ -108,4 +118,33 @@ bool Clinic::iter_is_out_of_bounds(std::map<int, Room>::iterator iter)
 std::map<int, Room> & Clinic::get_rooms_map()
 {
     return rooms;
+}
+
+bool Clinic::insert_patient_into_queue(int number, Patient patient)
+{
+    bool room_exists = false;
+    if (!iter_is_out_of_bounds(rooms.find(number)))
+    {
+        room_exists = true;
+        rooms[number].add_patient_to_queue(patient);
+    }
+
+    return room_exists;
+}
+
+bool Clinic::check_if_room_exists(int number)
+{
+    return !iter_is_out_of_bounds(find_room_by_number(number));
+}
+
+int Clinic::calculate_amount_of_work(std::string &procedure_name)
+{
+    return procedure_name.compare("Просто спросить") ?
+    std::numeric_limits<int>::max() :
+    MINIMAL_USER_AMOUNT_OF_WORK + procedure_name.size() * USER_AMOUNT_OF_WORK_PER_SYMBOL;
+}
+
+int Clinic::get_room_waiting_time(int room_number)
+{
+    return rooms[room_number].get_total_waiting_time();
 }

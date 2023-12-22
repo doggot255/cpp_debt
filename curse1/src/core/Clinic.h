@@ -6,6 +6,7 @@
 #include <queue>
 #include <map>
 #include <iomanip>
+#include <limits>
 
 #include "Person.h"
 #include "../generation/Generator.h"
@@ -18,6 +19,8 @@
 #define ROOM_NUMBER_MAX_GAP 20
 #define ROOM_NUMBER_MIN_GAP 1
 #define MINIMAL_ROOM_NUMBER 100
+#define MINIMAL_USER_AMOUNT_OF_WORK 100
+#define USER_AMOUNT_OF_WORK_PER_SYMBOL 10
 
 #define PRINT_BOARD_LENGTH 50
 #define INDEX_SUBSECTION_LENGTH 3
@@ -35,8 +38,9 @@ public:
     void print_as_table();
     void update();
     std::string to_string();
-
     std::string get_doctor_name();
+    void add_patient_to_queue(Patient patient);
+    int get_total_waiting_time();
 };
 
 class Clinic
@@ -48,11 +52,15 @@ public:
     void update(double);
     std::map<int, Room>::iterator find_room_by_number(int );
     std::map<int, Room>::iterator find_room_by_doctor(std::string &);
-    void insert_person_into_queue(int, Person);
+    bool check_if_room_exists(int);
+    bool insert_patient_into_queue(int, Patient);
     bool iter_is_out_of_bounds(std::map<int, Room>::iterator );
     std::map<int, Room> & get_rooms_map();
+    int get_room_waiting_time(int);
 
+    static int calculate_amount_of_work(std::string &);
     bool debug_print_rooms_to_file();
+
 };
 
 #endif

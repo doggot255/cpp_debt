@@ -30,7 +30,7 @@ class Generator
     std::vector<std::string> second_names_female;
     std::vector<std::string> surnames_male;
     std::vector<std::string> surnames_female;
-    
+
     std::random_device rd;
     std::mt19937 mt;
 
