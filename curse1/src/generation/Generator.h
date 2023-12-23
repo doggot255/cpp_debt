@@ -17,9 +17,9 @@
 #define FILENAME_SURNAMES_MALE "../src/generation/txt/surnames_male.txt"
 #define FILENAME_SURNAMES_FEMALE "../src/generation/txt/surnames_female.txt"
 
-#define MIN_PATIENT_AMOUNT_OF_WORK 50
+#define MIN_PATIENT_AMOUNT_OF_WORK 100
 #define MAX_PATIENT_AMOUNT_OF_WORK 300
-#define MAX_DOCTOR_THROUGHPUT 40
+#define MAX_DOCTOR_THROUGHPUT 30
 #define MIN_DOCTOR_THROUGHPUT 10
 
 class Generator

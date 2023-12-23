@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <queue>
+#include <list>
 #include <map>
 #include <iomanip>
 #include <limits>
@@ -21,7 +21,7 @@
 #define MINIMAL_ROOM_NUMBER 100
 #define MINIMAL_USER_AMOUNT_OF_WORK 100
 #define USER_AMOUNT_OF_WORK_PER_SYMBOL 10
-#define NEW_PATIENT_ARRIVAL_BASE_CHANCE 10
+#define NEW_PATIENT_ARRIVAL_BASE_CHANCE 0
 
 #define PRINT_BOARD_LENGTH 50
 #define INDEX_SUBSECTION_LENGTH 3
@@ -31,7 +31,7 @@
 class Room
 {
     Doctor doctor;
-    std::queue<Patient> patients;
+    std::list<Patient> patients;
     int room_number;
     float new_patient_arrival_chance;
 
@@ -41,7 +41,7 @@ public:
     void update();
     std::string to_string();
     std::string get_doctor_name();
-    void add_patient_to_queue(Patient patient);
+    void add_patient_to_queue(Patient);
     int get_total_waiting_time();
 };
 

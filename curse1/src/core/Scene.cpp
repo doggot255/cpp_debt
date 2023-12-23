@@ -60,11 +60,8 @@ void Scene::menu_find_room_by_number()
         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
     }
 
-    auto room_iter = clinic.find_room_by_number(room_number);
-
-    // iter is out of bounds => element does not exist
-    if (!clinic.iter_is_out_of_bounds(room_iter))
-        room_iter->second.print_as_table();
+    if (clinic.check_if_room_exists(room_number))
+        clinic.find_room_by_number(room_number)->second.print_as_table();
     else
         std::cout << "Кабинет с таким номером не найден" << std::endl;
 
@@ -86,6 +83,7 @@ void Scene::menu_find_doctor_by_surname()
         {
             room.second.print_as_table();
             doctor_exists = true;
+            std::cout << "Номер кабинета: " << room.first << std::endl;
             break;
         }
     }
@@ -131,7 +129,6 @@ void Scene::menu_insert_patient_into_queue()
     std::string procedure_name;
     std::cout << "Полное название процедуры: " << std::endl;
     std::cin >> procedure_name;
-    std::cout << Clinic::calculate_amount_of_work(procedure_name) << std::endl;
 
     clinic.insert_patient_into_queue(room_number, Patient(name, second_name, surname, Clinic::calculate_amount_of_work(procedure_name)));
     std::cout << "Примерное время ожидания: " << clinic.get_room_waiting_time(room_number) * 1000 / UPDATE_RATE_MILLISECONDS << " секунд";

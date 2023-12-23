@@ -24,7 +24,7 @@ Room::Room(): doctor(Generator::instance().create_new_doctor())
 {
     for(int i = 0; i < Generator::instance().get_random_number(0, 10); i++)
     {
-        patients.push(Generator::instance().create_new_patient());
+        patients.push_back(Generator::instance().create_new_patient());
     }
     new_patient_arrival_chance = NEW_PATIENT_ARRIVAL_BASE_CHANCE;
     update();
@@ -34,13 +34,12 @@ void Room::print_as_table()
 {
     draw_header(doctor.to_string(), INDEX_SUBSECTION_LENGTH,  PRINT_BOARD_LENGTH);
 
-    for (int i = 0; i < patients.size(); i++)
+    int patient_index = 1;
+    for (auto &patient: patients)
     {
-        draw_section_with_subsection(std::to_string(i), INDEX_SUBSECTION_LENGTH,
-                                    patients.front().to_string(),
+        draw_section_with_subsection(std::to_string(patient_index++), INDEX_SUBSECTION_LENGTH,
+                                    patient.to_string(),
                                     PRINT_BOARD_LENGTH - INDEX_SUBSECTION_LENGTH + 1);
-        patients.push(patients.front());
-        patients.pop();
     }
     draw_table_bottom(INDEX_SUBSECTION_LENGTH, PRINT_BOARD_LENGTH - INDEX_SUBSECTION_LENGTH + 3);
 }
@@ -52,11 +51,11 @@ void Room::update()
         patients.front().reduce_remaining_work(doctor.get_throughput());
         if (patients.front().get_remaining_amount_of_work() <= 0)
         {
-            patients.pop();
+            patients.pop_front();
         }
     }
 
-    new_patient_arrival_chance += 1;
+    new_patient_arrival_chance += 0.5;
     if (Generator::instance().get_random_number(0, 100) < new_patient_arrival_chance)
     {
         add_patient_to_queue(Generator::instance().create_new_patient());
@@ -76,20 +75,16 @@ std::string Room::to_string()
 
 void Room::add_patient_to_queue(Patient patient)
 {
-    patients.push(patient);
+    patients.push_back(patient);
 }
 
 int Room::get_total_waiting_time()
 {
     int waiting_time = 0;
 
-    for (int i = 0; i < patients.size() - 1; i++)
+    for (auto &patient: patients)
     {
-        waiting_time += patients.front().get_remaining_amount_of_work();
-        std::cout << i << " " << patients.front().get_remaining_amount_of_work() << "->" << waiting_time << std::endl;
-
-        patients.push(patients.front());
-        patients.pop();
+        waiting_time += patient.get_remaining_amount_of_work();
     }
 
     return waiting_time / doctor.get_throughput();
