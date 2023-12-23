@@ -26,6 +26,7 @@ Room::Room(): doctor(Generator::instance().create_new_doctor())
     {
         patients.push(Generator::instance().create_new_patient());
     }
+    new_patient_arrival_chance = NEW_PATIENT_ARRIVAL_BASE_CHANCE;
     update();
 }
 
@@ -53,6 +54,13 @@ void Room::update()
         {
             patients.pop();
         }
+    }
+
+    new_patient_arrival_chance += 1;
+    if (Generator::instance().get_random_number(0, 100) < new_patient_arrival_chance)
+    {
+        add_patient_to_queue(Generator::instance().create_new_patient());
+        new_patient_arrival_chance = NEW_PATIENT_ARRIVAL_BASE_CHANCE;
     }
 }
 
@@ -149,9 +157,7 @@ bool Clinic::check_if_room_exists(int number)
 
 int Clinic::calculate_amount_of_work(std::string &procedure_name)
 {
-    return procedure_name.compare("Просто спросить") ?
-    std::numeric_limits<int>::max() :
-    MINIMAL_USER_AMOUNT_OF_WORK + procedure_name.size() * USER_AMOUNT_OF_WORK_PER_SYMBOL;
+    return MINIMAL_USER_AMOUNT_OF_WORK + procedure_name.size() * USER_AMOUNT_OF_WORK_PER_SYMBOL;
 }
 
 int Clinic::get_room_waiting_time(int room_number)

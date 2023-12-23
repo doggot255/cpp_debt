@@ -21,6 +21,7 @@
 #define MINIMAL_ROOM_NUMBER 100
 #define MINIMAL_USER_AMOUNT_OF_WORK 100
 #define USER_AMOUNT_OF_WORK_PER_SYMBOL 10
+#define NEW_PATIENT_ARRIVAL_BASE_CHANCE 10
 
 #define PRINT_BOARD_LENGTH 50
 #define INDEX_SUBSECTION_LENGTH 3
@@ -32,6 +33,7 @@ class Room
     Doctor doctor;
     std::queue<Patient> patients;
     int room_number;
+    float new_patient_arrival_chance;
 
 public:
     Room();
@@ -60,7 +62,6 @@ public:
 
     static int calculate_amount_of_work(std::string &);
     bool debug_print_rooms_to_file();
-
 };
 
 #endif

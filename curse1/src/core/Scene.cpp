@@ -53,7 +53,12 @@ void Scene::menu_find_room_by_number()
 
     int room_number;
     std::cout << "Номер кабинета: ";
-    std::cin >> room_number;
+    while(!(std::cin >> room_number))
+    {
+        std::cout << "Некорректный ввод. Попробуйте еще раз" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
     auto room_iter = clinic.find_room_by_number(room_number);
 
@@ -96,9 +101,13 @@ void Scene::menu_insert_patient_into_queue()
     system("clear");
 
     int room_number;
-
     std::cout << "Номер кабинета: ";
-    std::cin >> room_number;
+    while(!(std::cin >> room_number))
+    {
+        std::cout << "Некорректный ввод. Попробуйте еще раз" << std::endl;
+        std::cin.clear();
+        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    }
 
     if (!clinic.check_if_room_exists(room_number))
     {
@@ -122,6 +131,7 @@ void Scene::menu_insert_patient_into_queue()
     std::string procedure_name;
     std::cout << "Полное название процедуры: " << std::endl;
     std::cin >> procedure_name;
+    std::cout << Clinic::calculate_amount_of_work(procedure_name) << std::endl;
 
     clinic.insert_patient_into_queue(room_number, Patient(name, second_name, surname, Clinic::calculate_amount_of_work(procedure_name)));
     std::cout << "Примерное время ожидания: " << clinic.get_room_waiting_time(room_number) * 1000 / UPDATE_RATE_MILLISECONDS << " секунд";
